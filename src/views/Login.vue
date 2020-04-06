@@ -1,16 +1,15 @@
 <template>
-  <div class="home">
+  <div class="login">
     <img alt="Vue logo" src="../assets/logo.png">
     <LoginComponent />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import LoginComponent from '@/components/registry/LoginComponent'
 
 export default {
-  name: 'Home',
+  name: 'Login',
   components: {
     LoginComponent
   }

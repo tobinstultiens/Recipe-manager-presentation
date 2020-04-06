@@ -1,6 +1,9 @@
+/* eslint-disable */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
+import Login from '@/views/Login.vue'
+import firebase from 'firebase'
 
 Vue.use(VueRouter)
 
@@ -8,7 +11,18 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta:{
+      guest: true
+    }
   },
   {
     path: '/about',
@@ -25,5 +39,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  firebase.auth().onAuthStateChanged(function(user: any) {
+    if (requiresAuth && !user) {
+      next('login');
+    } else {
+      next();
+    }
+  });
+  
+});
 
 export default router
