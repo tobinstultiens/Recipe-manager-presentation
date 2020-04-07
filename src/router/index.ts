@@ -12,7 +12,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    meta:{
+    meta: {
       requiresAuth: true
     }
   },
@@ -20,7 +20,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    meta:{
+    meta: {
       guest: true
     }
   },
@@ -42,14 +42,14 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  firebase.auth().onAuthStateChanged(function(user: any) {
+  firebase.auth().onAuthStateChanged(function (user: any) {
     if (requiresAuth && !user) {
       next('login');
     } else {
       next();
     }
   });
-  
+
 });
 
 export default router

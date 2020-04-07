@@ -1,18 +1,11 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <LoginComponent />
+    <img alt="Vue logo" src="../assets/logo.png" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import LoginComponent from '@/components/registry/LoginComponent'
-
 export default {
-  name: 'Home',
-  components: {
-    LoginComponent
-  }
-}
+  name: "Home"
+};
 </script>

@@ -4,14 +4,14 @@ import "firebase/analytics";
 import "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCkZPJsYdh7-4mcsuiPszvVERSwDOBKb74",
-    authDomain: "vue-routes-authentication.firebaseapp.com",
-    databaseURL: "https://vue-routes-authentication.firebaseio.com",
-    projectId: "vue-routes-authentication",
-    storageBucket: "vue-routes-authentication.appspot.com",
-    messagingSenderId: "680655489437",
-    appId: "1:680655489437:web:9d66d2b0f438e3e9014774",
-    measurementId: "G-CGL0FS2DVQ"
+    apiKey: "AIzaSyC2kutBl0p0OYEnebtackg0biZIUOG-QBg",
+    authDomain: "recipe-manager-e0544.firebaseapp.com",
+    databaseURL: "https://recipe-manager-e0544.firebaseio.com",
+    projectId: "recipe-manager-e0544",
+    storageBucket: "recipe-manager-e0544.appspot.com",
+    messagingSenderId: "66118028606",
+    appId: "1:66118028606:web:1e06d286f56799217b306f",
+    measurementId: "G-VTNKVC8PST"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
