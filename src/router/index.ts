@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
+import Register from '@/views/Register.vue'
 import firebase from 'firebase'
 
 Vue.use(VueRouter)
@@ -22,6 +23,14 @@ const routes = [
     component: Login,
     meta: {
       guest: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta:{
+      guest:true
     }
   },
   {
