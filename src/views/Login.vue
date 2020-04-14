@@ -1,42 +1,69 @@
 <template>
-  <v-card>
-    <div v-if="error" class="alert alert-danger">{{error}}</div>
-    <form action="#" @submit.prevent="submit">
-      <div class="form-group row">
-        <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
-        <div class="col-md-6">
-          <input
-            id="email"
-            type="email"
-            class="form-control"
-            name="email"
-            value
-            required
-            autofocus
-            v-model="form.email"
-          />
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-        <div class="col-md-6">
-          <input
-            id="password"
-            type="password"
-            class="form-control"
-            name="password"
-            required
-            v-model="form.password"
-          />
-        </div>
-      </div>
-      <div class="form-group row mb-0">
-        <div class="col-md-8 offset-md-4">
-          <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-      </div>
-    </form>
-  </v-card>
+ <v-container fill-height>
+   <v-row align="center" justify="center">
+     <v-col cols="4" sm="6">
+        <v-card class="elevation-12">
+          <v-toolbar color="primary" dark flat>
+            <v-toolbar-title>Login form</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-btn icon large to="/register" v-on="on">
+                  <v-icon>mdi-account-plus</v-icon>
+                </v-btn>
+              </template>
+              <span>Register</span>
+            </v-tooltip>
+          </v-toolbar>
+          <v-card-text>
+            <v-form ref="login">
+              <v-text-field
+                label="Email"
+                name="email"
+                prepend-icon="mdi-account"
+                v-model="form.email"
+                type="text"
+              ></v-text-field>
+
+              <v-text-field
+                id="password"
+                label="Password"
+                name="password"
+                prepend-icon="mdi-lock"
+                v-model="form.password"
+                type="password"
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="submit">Login</v-btn>
+          </v-card-actions>
+        </v-card>
+    <v-overlay :value="overlay">
+      <i class="fa-5x fas fa-spinner fa-pulse"></i>
+    </v-overlay>
+    <v-dialog v-model="dialog" width="500">
+      <v-card>
+        <v-card-title class="headline" primary-title>
+          Something went wrong!
+        </v-card-title>
+
+        <v-card-text>{{ this.dialogInfo }}</v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="dialog = false">
+            I understand
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     </v-col>
+   </v-row>
+  </v-container> 
 </template>
 
 <script>
@@ -50,7 +77,9 @@ export default {
         email: "",
         password: ""
       },
-      error: null
+      overlay: false,
+      dialog: false,
+      dialogInfo: null,
     };
   },
   methods: {
