@@ -1,74 +1,73 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Register</div>
-          <div class="card-body">
-            <div v-if="error" class="alert alert-danger">{{error}}</div>
-            <form action="#" @submit.prevent="submit">
-              <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+  <v-container fill-height fluid>
+    <v-row align="center" justify="center">
+      <v-col></v-col>
+      <v-col cols="3" sm="4">
+        <v-card class="elevation-12">
+          <v-toolbar color="primary" dark flat>
+            <v-toolbar-title>Register form</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-btn icon large to="/register" v-on="on">
+                  <v-icon>mdi-account-plus</v-icon>
+                </v-btn>
+              </template>
+              <span>Register</span>
+            </v-tooltip>
+          </v-toolbar>
+          <v-card-text>
+            <v-form ref="login">
+              <v-text-field
+                label="Name"
+                name="name"
+                prepend-icon="mdi-account"
+                v-model="form.name"
+                type="text"
+              ></v-text-field>
 
-                <div class="col-md-6">
-                  <input
-                    id="name"
-                    type="name"
-                    class="form-control"
-                    name="name"
-                    value
-                    required
-                    autofocus
-                    v-model="form.name"
-                  />
-                </div>
-              </div>
+              <v-text-field
+                label="Email"
+                name="email"
+                prepend-icon="mdi-account"
+                v-model="form.email"
+                type="text"
+              ></v-text-field>
 
-              <div class="form-group row">
-                <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
-
-                <div class="col-md-6">
-                  <input
-                    id="email"
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    value
-                    required
-                    autofocus
-                    v-model="form.email"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                <div class="col-md-6">
-                  <input
-                    id="password"
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    required
-                    v-model="form.password"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">Register</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              <v-text-field
+                id="password"
+                label="Password"
+                name="password"
+                prepend-icon="mdi-lock"
+                v-model="form.password"
+                type="password"
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="submit">Register</v-btn>
+          </v-card-actions>
+        </v-card>
+        <v-overlay :value="overlay">
+          <i class="fa-5x fas fa-spinner fa-pulse"></i>
+        </v-overlay>
+        <v-dialog v-model="dialog" width="500">
+          <v-card>
+            <v-card-title class="headline" primary-title>Something went wrong!</v-card-title>
+            <v-card-text>{{ this.dialogInfo }}</v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="dialog = false">I understand</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-col>
+      <v-col></v-col>
+    </v-row>
+  </v-container>
 </template>
-
 
 <script>
 import firebase from "firebase";
@@ -78,11 +77,13 @@ export default {
   data() {
     return {
       form: {
-        name: "",
         email: "",
-        password: ""
+        password: "",
+        name: ""
       },
-      error: null
+      overlay: false,
+      dialog: false,
+      dialogInfo: null
     };
   },
   methods: {
@@ -90,13 +91,8 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => {
-          data.user
-            .updateProfile({
-              displayName: this.form.name
-            })
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            .then(() => {});
+        .then(() => {
+          this.$router.replace({ name: "Home" });
         })
         .catch(err => {
           this.error = err.message;

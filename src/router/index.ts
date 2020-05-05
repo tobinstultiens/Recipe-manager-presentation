@@ -23,22 +23,24 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
-      guest: true
+      guest: true,
+      hideNavigation: true
     }
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
-    meta:{
-      guest:true
+    meta: {
+      guest: true,
+      hideNavigation: true
     }
   },
   {
     path: '/recipe',
     name: 'Recipe',
     component: Recipe,
-    meta:{
+    meta: {
       requiresAuth: true
     }
   }
