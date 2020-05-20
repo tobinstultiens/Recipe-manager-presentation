@@ -42,6 +42,15 @@
                 v-model="form.password"
                 type="password"
               ></v-text-field>
+
+              <v-text-field
+                id="confirmPassword"
+                label="Confirm Password"
+                name="confirmPassword"
+                prepend-icon="mdi-lock"
+                v-model="form.confirmPassword"
+                type="password"
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -79,7 +88,8 @@ export default {
       form: {
         email: "",
         password: "",
-        name: ""
+        name: "",
+		confirmPassword: ""
       },
       overlay: false,
       dialog: false,
