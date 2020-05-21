@@ -39,7 +39,7 @@ export class RecipeService {
 		http.put("/recipe/", {
 			body: recipe
 		})
-			.then(response => {
+			.then(() => {
 				return true;
 			})
 			.catch(error => {
