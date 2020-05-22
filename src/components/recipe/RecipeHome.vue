@@ -61,11 +61,18 @@ const recipeService = new RecipeService();
 export default Vue.extend({
 	data() {
 		return {
-			items: Array<RecipeList>(),
+			items: Array<RecipeList>()
 		};
 	},
- async mounted() {
-		this.items = await recipeService.getAll(1, 25);
+	async mounted() {
+		await recipeService
+			.getAll(1, 25)
+			.then(response => {
+				this.items = response.data;
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	}
 });
 </script>
