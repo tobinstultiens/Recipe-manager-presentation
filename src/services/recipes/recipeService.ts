@@ -2,32 +2,40 @@ import http from "../httpcommon";
 import { Recipe } from "@/models/Recipe.ts";
 import { RecipeList } from "@/models/RecipeList.ts";
 
-export class RecipeService {
-	getAll(): RecipeList[] | null {
-		http.get<RecipeList>("/recipe")
+export default class RecipeService {
+	getAll(Page: number, Size: number): RecipeList[] | void {
+		http
+			.get<RecipeList>("/recipe", {
+				params: {
+					Page: Page,
+					Size: Size
+				}
+			})
 			.then(response => {
-				return response;
+				const { data } = response;
+				console.log(data);
+				return data;
 			})
 			.catch(error => {
 				console.log(error);
 			});
-		return null;
 	}
-	get(id: string): Recipe | null {
-		http.get<Recipe>("/recipe/" + id)
+	get(id: string): Recipe | void {
+		http
+			.get<Recipe>("/recipe/" + id)
 			.then(response => {
-				return response;
+				return response.data;
 			})
 			.catch(error => {
 				console.log(error);
 			});
-		return null;
 	}
 	post(recipe: Recipe): boolean {
-		http.post("/recipe/", {
-			body: recipe
-		})
-			.then(response => {
+		http
+			.post("/recipe/", {
+				body: recipe
+			})
+			.then(() => {
 				return true;
 			})
 			.catch(error => {
@@ -36,9 +44,21 @@ export class RecipeService {
 		return false;
 	}
 	put(recipe: Recipe): boolean {
-		http.put("/recipe/", {
-			body: recipe
-		})
+		http
+			.put("/recipe/", {
+				body: recipe
+			})
+			.then(() => {
+				return true;
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		return false;
+	}
+	delete(id: string): boolean {
+		http
+			.delete<Recipe>("/recipe/" + id)
 			.then(() => {
 				return true;
 			})

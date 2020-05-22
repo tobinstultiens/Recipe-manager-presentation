@@ -55,12 +55,17 @@
 <script lang="ts">
 import Vue from "vue";
 import RecipeService from "@/services/recipes/recipeService.ts";
+import { RecipeList } from "@/models/RecipeList.ts";
+const recipeService = new RecipeService();
 
 export default Vue.extend({
 	data() {
 		return {
-		items: RecipeService.getAll(),
+			items: Array<RecipeList>(),
 		};
+	},
+ async mounted() {
+		this.items = await recipeService.getAll(1, 25);
 	}
 });
 </script>
