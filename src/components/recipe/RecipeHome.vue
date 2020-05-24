@@ -1,5 +1,5 @@
 <template>
-	<v-card max-width="400" class="mx-auto">
+	<v-card class="mx-auto">
 		<v-system-bar color="pink darken-2" dark>
 			<v-spacer></v-spacer>
 			<v-icon>mdi-window-minimize</v-icon>
@@ -9,7 +9,7 @@
 
 		<v-app-bar dark color="pink">
 			<v-app-bar-nav-icon></v-app-bar-nav-icon>
-			<v-toolbar-title>My Music</v-toolbar-title>
+			<v-toolbar-title>My Recipes</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-btn icon>
 				<v-icon>mdi-magnify</v-icon>
@@ -18,19 +18,6 @@
 
 		<v-container>
 			<v-row dense>
-				<v-col cols="12">
-					<v-card color="#385F73" dark>
-						<v-card-title class="headline">Unlimited music now</v-card-title>
-						<v-card-subtitle
-							>Listen to your favorite artists and albums whenever and wherever,
-							online and offline.</v-card-subtitle
-						>
-						<v-card-actions>
-							<v-btn text>Listen Now</v-btn>
-						</v-card-actions>
-					</v-card>
-				</v-col>
-
 				<v-col v-for="(item, i) in items" :key="i" cols="12">
 					<v-card dark>
 						<div class="d-flex flex-no-wrap justify-space-between">

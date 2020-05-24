@@ -1,6 +1,12 @@
 <template>
 	<div class="home">
-		<RecipeHome />
+		<v-row>
+			<v-col> </v-col>
+			<v-col :cols="6">
+				<RecipeHome />
+			</v-col>
+			<v-col> </v-col>
+		</v-row>
 		<v-btn @click="logout">Logout</v-btn>
 	</div>
 </template>
