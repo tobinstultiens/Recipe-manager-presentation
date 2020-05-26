@@ -8,14 +8,16 @@
 			<v-col> </v-col>
 		</v-row>
 		<v-btn @click="logout">Logout</v-btn>
+		<v-btn @click="CreateRecipe">Create Recipe</v-btn>
 	</div>
 </template>
 
 <script lang="ts">
 import firebase from "firebase";
-import RecipeHome from "@/components/recipe/RecipeHome.vue";
+import RecipeHome from "./components/recipe/RecipeHome.vue";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
 	name: "Home",
 	components: {
 		RecipeHome
@@ -33,7 +35,10 @@ export default {
 						// An error happened.
 					}
 				);
+		},
+		CreateRecipe() {
+			this.$router.replace({ name: "RecipeAdd" });
 		}
 	}
-};
+});
 </script>

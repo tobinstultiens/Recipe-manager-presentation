@@ -6,6 +6,7 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import firebase from "firebase";
 import Recipe from "@/views/Recipe.vue";
+import RecipeAdd from "@/views/RecipeAdd.vue";
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,14 @@ const routes = [
 		path: "/recipe",
 		name: "Recipe",
 		component: Recipe,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/recipe/add",
+		name: "RecipeAdd",
+		component: RecipeAdd,
 		meta: {
 			requiresAuth: true
 		}

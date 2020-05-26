@@ -43,6 +43,8 @@
 import Vue from "vue";
 import RecipeService from "@/services/recipes/recipeService.ts";
 import { RecipeList } from "@/models/RecipeList.ts";
+
+// Instantiate the recipe service to make use of it in multiple functions.
 const recipeService = new RecipeService();
 
 export default Vue.extend({
