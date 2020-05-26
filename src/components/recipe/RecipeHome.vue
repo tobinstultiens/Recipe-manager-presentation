@@ -48,10 +48,12 @@ const recipeService = new RecipeService();
 export default Vue.extend({
 	data() {
 		return {
+			// Recipe List for the visual display
 			items: Array<RecipeList>()
 		};
 	},
 	async mounted() {
+		// Await the retrieval of all recipes.
 		await recipeService
 			.getAll(1, 25)
 			.then(response => {
