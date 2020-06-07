@@ -51,7 +51,7 @@ export default Vue.extend({
 	data() {
 		return {
 			// Recipe List for the visual display
-			items: Array<RecipeList>()
+			items: Array<RecipeList>(),
 		};
 	},
 	async mounted() {
@@ -64,7 +64,7 @@ export default Vue.extend({
 			.catch(error => {
 				console.log(error);
 			});
-	}
+	},
 });
 </script>
 

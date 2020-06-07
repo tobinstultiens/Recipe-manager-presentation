@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-				<RecipeHome />
+		<RecipeHome />
 	</div>
 </template>
 
@@ -12,6 +12,6 @@ export default Vue.extend({
 	name: "Home",
 	components: {
 		RecipeHome
-	},
+	}
 });
 </script>
