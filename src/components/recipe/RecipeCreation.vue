@@ -70,7 +70,7 @@
 				v-bind:key="counter + 1"
 			>
 				<v-col sm="1">
-					<span>{{ counter+1 }}</span>
+					<span>{{ counter + 1 }}</span>
 				</v-col>
 				<v-col>
 					<v-text-field
@@ -94,7 +94,7 @@
 				required
 			></v-text-field>
 
-			<v-btn class="mr-4">
+			<v-btn @click="createRecipe" class="mr-4">
 				Create
 			</v-btn>
 		</v-form>
@@ -104,6 +104,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Recipe from "@/models/Recipe.ts";
+import RecipeService from "@/services/recipes/recipeService.ts";
+const recipeService = new RecipeService();
 
 export default Vue.extend({
 	name: "RecipeCreation",
@@ -119,7 +121,9 @@ export default Vue.extend({
 	},
 	methods: {
 		addRecipeDirections() {
-			this.recipe.directions.push({});
+			this.recipe.directions.push({
+				index: this.recipe.directions.length + 1
+			});
 		},
 		addRecipeIngredient() {
 			this.recipe.ingredients.push({});
@@ -131,6 +135,16 @@ export default Vue.extend({
 		},
 		deleteRecipeIngredient(counter) {
 			this.recipe.ingredients.splice(counter, 1);
+		},
+		async createRecipe() {
+			await recipeService
+				.post(this.recipe)
+				.then(response => {
+					console.log(response);
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		}
 	},
 	mounted() {
