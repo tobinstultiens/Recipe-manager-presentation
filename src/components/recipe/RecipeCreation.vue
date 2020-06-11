@@ -1,22 +1,25 @@
 <template>
 	<div>
+		<v-alert type="error" v-model="alert" dismissable>
+			Creation of recipe has failed.
+		</v-alert>
 		<v-form>
 			<v-text-field
-				v-model="recipe.Title"
+				v-model="recipe.title"
 				:counter="50"
 				:rules="titleRules"
 				label="Name"
 				required
 			></v-text-field>
 			<v-text-field
-				v-model="recipe.Description"
+				v-model="recipe.description"
 				label="Description"
 				required
 			></v-text-field>
 			<v-btn @click="addRecipeIngredient">Add ingredient</v-btn>
 			<v-row
-				v-for="(ingredient, counter) in recipe.ingredients"
-				v-bind:key="counter + 1"
+				v-for="(ingredient, counterr) in recipe.ingredients"
+				:key="counterr + 1"
 			>
 				<v-col sm="6">
 					<v-text-field
@@ -27,8 +30,9 @@
 				</v-col>
 				<v-col>
 					<v-text-field
-						v-model="ingredient.measurement"
+						v-model.number="ingredient.measurement"
 						label="Amount of"
+						type="number"
 						required
 					></v-text-field>
 				</v-col>
@@ -39,7 +43,7 @@
 						required
 					></v-text-field>
 				</v-col>
-				<span @click="deleteRecipeIngredient(counter)">X</span>
+				<span @click="deleteRecipeIngredient(counterr)">X</span>
 			</v-row>
 			<v-row>
 				<v-col sm="4">
@@ -67,7 +71,7 @@
 			<v-btn @click="addRecipeDirections">Add direction</v-btn>
 			<v-row
 				v-for="(direction, counter) in recipe.directions"
-				v-bind:key="counter + 1"
+				:key="counter + 1"
 			>
 				<v-col sm="1">
 					<span>{{ counter + 1 }}</span>
@@ -84,26 +88,58 @@
 				</v-col>
 			</v-row>
 			<v-text-field
-				v-model="recipe.ImgLink"
+				v-model="recipe.imgLink"
 				label="Image Link"
 				required
 			></v-text-field>
 			<v-text-field
-				v-model="recipe.VideoLink"
+				v-model="recipe.videoLink"
 				label="Video Link"
 				required
 			></v-text-field>
 
-			<v-btn @click="createRecipe" class="mr-4">
+			<v-btn @click="dialog = true" class="mr-4">
 				Create
 			</v-btn>
 		</v-form>
+		<div class="text-center">
+			<v-dialog v-model="dialog" width="250">
+				<v-card>
+					<v-card-title class="headline justify-center lighten-2" primary-title>
+						Confirmation
+					</v-card-title>
+
+					<v-card-text>
+						Are you sure?
+					</v-card-text>
+
+					<v-divider></v-divider>
+
+					<v-card-actions>
+						<v-spacer></v-spacer>
+
+						<v-btn color="primary" text @click="createRecipe">
+							Yes
+						</v-btn>
+						<v-btn color="primary" text @click="dialog = false">
+							No
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
+		</div>
+		<v-snackbar color="red" v-model="snackbar">
+			{{ snackbarText }}
+			<v-btn text @click="snackbar = false">
+				Close
+			</v-btn>
+		</v-snackbar>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Recipe from "@/models/Recipe.ts";
+import { Recipe } from "@/models/Recipe.ts";
 import RecipeService from "@/services/recipes/recipeService.ts";
 const recipeService = new RecipeService();
 
@@ -111,7 +147,11 @@ export default Vue.extend({
 	name: "RecipeCreation",
 	data() {
 		return {
-			recipe: Recipe,
+			dialog: false,
+			alert: false,
+			snackbar: false,
+			snackbarText: "",
+			recipe: {} as Recipe,
 			titleRules: [
 				(v: string) => !!v || "Name is required",
 				(v: string) =>
@@ -122,40 +162,67 @@ export default Vue.extend({
 	methods: {
 		addRecipeDirections() {
 			this.recipe.directions.push({
-				index: this.recipe.directions.length + 1
+				index: this.recipe.directions.length + 1,
+				description: ""
 			});
 		},
 		addRecipeIngredient() {
-			this.recipe.ingredients.push({});
+			this.recipe.ingredients.push({
+				measurement: 0,
+				measurementType: "",
+				ingredientDescription: ""
+			});
 		},
-		deleteRecipeDirections(counter) {
+		deleteRecipeDirections(counter: number) {
 			if (counter + 1 === this.recipe.directions.length) {
 				this.recipe.directions.splice(counter, 1);
+			} else {
+				this.snackbarText =
+					"ERROR: There exists a direction after this one delete that one if you wish to shorten the amount of directions";
+				this.snackbar = true;
 			}
 		},
-		deleteRecipeIngredient(counter) {
+		deleteRecipeIngredient(counter: number) {
 			this.recipe.ingredients.splice(counter, 1);
 		},
 		async createRecipe() {
+			this.dialog = false;
 			await recipeService
 				.post(this.recipe)
-				.then(response => {
-					console.log(response);
+				.then(() => {
+					this.$router.push({ name: "Home" });
 				})
 				.catch(error => {
 					console.log(error);
+					this.alert = true;
+					setTimeout(() => {
+						this.alert = false;
+					}, 4000);
 				});
 		}
 	},
 	mounted() {
 		this.recipe = {
+			title: "",
+			description: "",
 			directions: [
 				{
-					index: 1
+					index: 1,
+					description: ""
 				}
 			],
-			ingredients: [{}],
-			recipeTime: {}
+			ingredients: [
+				{
+					measurementType: "",
+					measurement: 0,
+					ingredientDescription: ""
+				}
+			],
+			recipeTime: {
+				prepTime: "",
+				cookTime: "",
+				totalTime: ""
+			}
 		};
 	}
 });

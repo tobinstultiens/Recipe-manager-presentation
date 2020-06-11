@@ -21,15 +21,11 @@ export default class RecipeService {
 	}
 	// Create this recipe
 	post(recipe: Recipe) {
-		return http.post("/recipe/", {
-			body: recipe
-		});
+		return http.post<Recipe>("/recipe", recipe);
 	}
 	// Update this recipe
 	put(recipe: Recipe) {
-		return http.put("/recipe/", {
-			body: recipe
-		});
+		return http.put<Recipe>("/recipe", recipe);
 	}
 	// Delete this recipe
 	delete(id: string) {

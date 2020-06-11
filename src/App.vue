@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<v-app id="app">
 		<v-row>
 			<v-col> </v-col>
 			<v-col :cols="6">
@@ -9,7 +9,7 @@
 		</v-row>
 		<v-btn @click="logout">Logout</v-btn>
 		<v-btn @click="CreateRecipe">Create Recipe</v-btn>
-	</div>
+	</v-app>
 </template>
 
 <script lang="ts">
@@ -24,10 +24,10 @@ export default Vue.extend({
 				.signOut()
 				.then(
 					function() {
-						// Sign-out successful.
+						this.$router.push({ name: "Login" });
 					},
 					function() {
-						// An error happened.
+						this.$router.replace({ name: "Login" });
 					}
 				);
 		},

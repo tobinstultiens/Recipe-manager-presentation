@@ -1,6 +1,6 @@
 <template>
 	<div>
-	<RecipeCreation />
+		<RecipeCreation />
 	</div>
 </template>
 

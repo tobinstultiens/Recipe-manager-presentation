@@ -1,13 +1,13 @@
 <template>
 	<v-card class="mx-auto">
-		<v-system-bar color="pink darken-2" dark>
+		<v-system-bar color="red darken-4" dark>
 			<v-spacer></v-spacer>
 			<v-icon>mdi-window-minimize</v-icon>
 			<v-icon>mdi-window-maximize</v-icon>
 			<v-icon>mdi-close</v-icon>
 		</v-system-bar>
 
-		<v-app-bar dark color="pink">
+		<v-app-bar dark color="red darken-2">
 			<v-app-bar-nav-icon></v-app-bar-nav-icon>
 			<v-toolbar-title>My Recipes</v-toolbar-title>
 			<v-spacer></v-spacer>
@@ -30,8 +30,11 @@
 							</div>
 
 							<v-avatar class="ma-3" size="125" tile>
-								<v-img :src="item.imgLink"></v-img>
+								<v-img v-if="item.imgLink" :src="item.imgLink"></v-img>
 							</v-avatar>
+							<v-btn @click="deleteRecipe(item.id)">
+								Delete
+							</v-btn>
 						</div>
 					</v-card>
 				</v-col>
@@ -51,12 +54,26 @@ export default Vue.extend({
 	data() {
 		return {
 			// Recipe List for the visual display
-			items: Array<RecipeList>(),
+			items: Array<RecipeList>()
 		};
 	},
-	async mounted() {
+	mounted() {
 		// Await the retrieval of all recipes.
-		await recipeService
+		this.retrieveRecipes();
+	},
+	methods: {
+		deleteRecipe(id: string) {
+			recipeService
+				.delete(id)
+				.then(() => {
+					this.retrieveRecipes();
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		},
+		retrieveRecipes(){
+		recipeService
 			.getAll(1, 25)
 			.then(response => {
 				this.items = response.data;
@@ -64,7 +81,8 @@ export default Vue.extend({
 			.catch(error => {
 				console.log(error);
 			});
-	},
+			}
+	}
 });
 </script>
 

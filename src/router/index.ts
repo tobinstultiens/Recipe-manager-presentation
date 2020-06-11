@@ -36,14 +36,6 @@ const routes = [
 		}
 	},
 	{
-		path: "/recipe",
-		name: "Recipe",
-		component: Recipe,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
 		path: "/recipe/add",
 		name: "RecipeAdd",
 		component: RecipeAdd,
