@@ -141,6 +141,7 @@
 import Vue from "vue";
 import { Recipe } from "@/models/Recipe.ts";
 import RecipeService from "@/services/recipes/recipeService.ts";
+import * as firebase from "firebase";
 const recipeService = new RecipeService();
 
 export default Vue.extend({
@@ -187,6 +188,9 @@ export default Vue.extend({
 		},
 		async createRecipe() {
 			this.dialog = false;
+			const token = await firebase.auth().currentUser?.uid;
+			
+			this.recipe.userId = token;
 			await recipeService
 				.post(this.recipe)
 				.then(() => {

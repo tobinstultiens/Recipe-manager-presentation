@@ -46,6 +46,7 @@
 import Vue from "vue";
 import RecipeService from "@/services/recipes/recipeService.ts";
 import { RecipeList } from "@/models/RecipeList.ts";
+import * as firebase from "firebase";
 
 // Instantiate the recipe service to make use of it in multiple functions.
 const recipeService = new RecipeService();
@@ -72,9 +73,10 @@ export default Vue.extend({
 					console.log(error);
 				});
 		},
-		retrieveRecipes(){
+		async retrieveRecipes(){
+			const token = await firebase.auth().currentUser.uid;
 		recipeService
-			.getAll(1, 25)
+			.getAll(1, 25, token)
 			.then(response => {
 				this.items = response.data;
 			})

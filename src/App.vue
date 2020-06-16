@@ -24,15 +24,15 @@ export default Vue.extend({
 				.signOut()
 				.then(
 					function() {
-						this.$router.push({ name: "Login" });
+						this.$router.push("/");
 					},
 					function() {
-						this.$router.replace({ name: "Login" });
+						this.$router.push("/");
 					}
 				);
 		},
 		CreateRecipe() {
-			this.$router.replace({ name: "RecipeAdd" });
+			this.$router.push({ name: "RecipeAdd" });
 		}
 	}
 });

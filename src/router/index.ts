@@ -7,6 +7,7 @@ import Register from "@/views/Register.vue";
 import firebase from "firebase";
 import Recipe from "@/views/Recipe.vue";
 import RecipeAdd from "@/views/RecipeAdd.vue";
+import RecipeUpdate from "@/views/RecipeUpdate.vue";
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,22 @@ const routes = [
 		}
 	},
 	{
+		path: "/recipe/get/:recipeId",
+		name: "Recipe",
+		component: Recipe,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/recipe/update/:recipeId",
+		name: "RecipeUpdate",
+		component: RecipeUpdate,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
 		path: "/recipe/add",
 		name: "RecipeAdd",
 		component: RecipeAdd,
@@ -55,7 +72,7 @@ router.beforeEach(async (to, from, next) => {
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 	firebase.auth().onAuthStateChanged(function(user: any) {
 		if (requiresAuth && !user) {
-			next("login");
+			next("Login");
 		} else {
 			next();
 		}
