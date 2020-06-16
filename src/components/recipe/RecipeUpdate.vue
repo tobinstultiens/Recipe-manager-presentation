@@ -138,17 +138,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { Recipe } from "@/models/Recipe.ts";
 import RecipeService from "@/services/recipes/recipeService.ts";
 const recipeService = new RecipeService();
 
-export default Vue.extend({
-	name: "RecipeUpdate",
-	props: {
-		recipe: {} as Recipe
-	},
-	data() {
+	@Component({data() {
 		return {
 			dialog: false,
 			alert: false,
@@ -160,50 +155,51 @@ export default Vue.extend({
 					(v && v.length <= 50) || "Name must be less than 10 characters"
 			]
 		};
-	},
-	methods: {
-		addRecipeDirections() {
-			this.recipe.directions.push({
-				index: this.recipe.directions.length + 1,
+	}
+	})
+export default class RecipeUpdate extends Vue {
+	@Prop() private recipe!: Recipe;
+	addRecipeDirections() {
+			this.$data.recipe.directions.push({
+				index: this.$data.recipe.directions.length + 1,
 				description: ""
 			});
-		},
+		}
 		addRecipeIngredient() {
-			this.recipe.ingredients.push({
+			this.$data.recipe.ingredients.push({
 				measurement: 0,
 				measurementType: "",
 				ingredientDescription: ""
 			});
-		},
+		}
 		deleteRecipeDirections(counter: number) {
-			if (counter + 1 === this.recipe.directions.length) {
-				this.recipe.directions.splice(counter, 1);
+			if (counter + 1 === this.$data.recipe.directions.length) {
+				this.$data.recipe.directions.splice(counter, 1);
 			} else {
-				this.snackbarText =
+				this.$data.snackbarText =
 					"ERROR: There exists a direction after this one delete that one if you wish to shorten the amount of directions";
-				this.snackbar = true;
+				this.$data.snackbar = true;
 			}
-		},
+		}
 		deleteRecipeIngredient(counter: number) {
-			this.recipe.ingredients.splice(counter, 1);
-		},
+			this.$data.recipe.ingredients.splice(counter, 1);
+		}
 		async updateRecipe() {
-			this.dialog = false;
+			this.$data.dialog = false;
 			await recipeService
-				.put(this.recipe)
+				.put(this.$data.recipe)
 				.then(() => {
 					this.$router.push({ name: "Home" });
 				})
 				.catch(error => {
 					console.log(error);
-					this.alert = true;
+					this.$data.alert = true;
 					setTimeout(() => {
-						this.alert = false;
+						this.$data.alert = false;
 					}, 4000);
 				});
 		}
-	}
-});
+}
 </script>
 
 <style scoped></style>

@@ -3,6 +3,8 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import Vuex from '@/plugins/vuex';
+import MenuModule, { IMenuModule } from "@/modules/Recipe.module";
 import * as firebase from 'firebase'
 import "firebase/analytics";
 import "firebase/auth";
@@ -24,6 +26,14 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+const menuModule: IMenuModule = new MenuModule();
+
+const store = new Vuex.Store<IRootState>({
+  modules: {
+    menu: menuModule
+  }
+});
 
 new Vue({
   router,

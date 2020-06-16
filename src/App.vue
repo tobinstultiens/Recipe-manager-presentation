@@ -22,14 +22,9 @@ export default Vue.extend({
 			firebase
 				.auth()
 				.signOut()
-				.then(
-					function() {
-						this.$router.push("/");
-					},
-					function() {
-						this.$router.push("/");
-					}
-				);
+				.then(() => {
+					this.$router.push({ name: "Login" })
+				});
 		},
 		CreateRecipe() {
 			this.$router.push({ name: "RecipeAdd" });

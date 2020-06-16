@@ -7,7 +7,7 @@ import { RecipeList } from "@/models/RecipeList.ts";
 */
 export default class RecipeService {
 	// Retrieve all recipes with this pagination.
-	getAll(Page: number, Size: number, uid: string) {
+	getAll(Page: number, Size: number, uid: string | undefined) {
 		return http.get<RecipeList[]>("/recipe", {
 			params: {
 				Page: Page,
