@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
-import store from './store'
 import Vuex from '@/plugins/vuex';
+import { RootState } from "@/state/RootState";
 import MenuModule, { IMenuModule } from "@/modules/Recipe.module";
 import * as firebase from 'firebase'
 import "firebase/analytics";
@@ -29,7 +29,7 @@ firebase.analytics();
 
 const menuModule: IMenuModule = new MenuModule();
 
-const store = new Vuex.Store<IRootState>({
+const store = new Vuex.Store<RootState>({
   modules: {
     menu: menuModule
   }

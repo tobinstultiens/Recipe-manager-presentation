@@ -14,7 +14,9 @@ module.exports = {
   rules: {
     "no-explicit-any": "off",
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "interface-name-prefix" : 0
+    
   },
   overrides: [
     {
