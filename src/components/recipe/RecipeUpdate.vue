@@ -130,8 +130,7 @@ export default class RecipeUpdate extends Vue {
       .then(() => {
         this.$router.push({ name: "Home" });
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
         this.$data.alert = true;
         setTimeout(() => {
           this.$data.alert = false;
