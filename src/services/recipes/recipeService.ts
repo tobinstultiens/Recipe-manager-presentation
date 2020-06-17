@@ -2,49 +2,34 @@ import http from "../httpcommon";
 import { Recipe } from "@/models/Recipe.ts";
 import { RecipeList } from "@/models/RecipeList.ts";
 
-export class RecipeService {
-	getAll(): RecipeList[] | null {
-		http.get<RecipeList>("/recipe")
-			.then(response => {
-				return response;
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		return null;
+/**
+	* This is the recipe service
+*/
+export default class RecipeService {
+	// Retrieve all recipes with this pagination.
+	getAll(Page: number, Size: number, uid: string | undefined) {
+		return http.get<RecipeList[]>("/recipe", {
+			params: {
+				Page: Page,
+				Size: Size,
+				Uid: uid,
+			}
+		});
 	}
-	get(id: string): Recipe | null {
-		http.get<Recipe>("/recipe/" + id)
-			.then(response => {
-				return response;
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		return null;
+	// Retrieve this specific recipe
+	get(id: string) {
+		return http.get<Recipe>("/recipe/" + id);
 	}
-	post(recipe: Recipe): boolean {
-		http.post("/recipe/", {
-			body: recipe
-		})
-			.then(response => {
-				return true;
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		return false;
+	// Create this recipe
+	post(recipe: Recipe) {
+		return http.post<Recipe>("/recipe", recipe);
 	}
-	put(recipe: Recipe): boolean {
-		http.put("/recipe/", {
-			body: recipe
-		})
-			.then(response => {
-				return true;
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		return false;
+	// Update this recipe
+	put(recipe: Recipe) {
+		return http.put<Recipe>("/recipe", recipe);
+	}
+	// Delete this recipe
+	delete(id: string) {
+		return http.delete<Recipe>("/recipe/" + id);
 	}
 }
