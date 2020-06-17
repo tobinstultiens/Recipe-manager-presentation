@@ -2,7 +2,6 @@
 import RecipeService from "@/services/recipes/recipeService";
 import { Recipe } from "@/models/Recipe"
 import { RecipeList } from "@/models/RecipeList"
-import { Action } from 'vuex';
 const recipeService = new RecipeService();
 
 // export const recipe = {
@@ -43,46 +42,71 @@ const recipeService = new RecipeService();
 // }
 
 import { Module, MutationTree, ActionTree } from 'vuex';
+import { RootState } from '@/state/RootState';
 
 interface Menu {
     recipes: Recipe[];
-  }
+    recipeLists: RecipeList[];
+}
 
 export interface IMenuState {
-  menu: Menu;
+    menu: Menu;
 }
 
 export interface IMenuMutations extends MutationTree<IMenuState> {
-  addRecipe(state: IMenuState, recipe: Recipe): any;
+    addRecipe(state: IMenuState, recipe: Recipe): any;
+}
+
+export const MenuActions: ActionTree<IMenuState, RootState> = {
+    addRecipe({ commit }, recipe): any {
+        recipeService
+            .post(recipe)
+            .then(() => {
+                commit('addRecipe', recipe);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    setRecipeList({ commit }, payload): any {
+        recipeService
+            .getAll(payload.page, payload.size, payload.token)
+            .then(response => {
+                commit('setRecipeList', response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 }
 
 export interface IMenuModule {
-  namespaced?: boolean;
-  state?: IMenuState;
-  mutations?: IMenuMutations;
+    namespaced?: boolean;
+    state?: IMenuState;
+    mutations?: IMenuMutations;
 }
 
 export default class MenuModule implements IMenuModule, Module<IMenuState, Menu> {
-  public namespaced?: boolean;
-  public state?: IMenuState;
-  public mutations?: IMenuMutations;
-  
-  public constructor() {
-    this.namespaced = true;
-    this.state = this.getMenuState();
-    this.mutations = this.getMutations();
-  }
+    public namespaced?: boolean;
+    public state?: IMenuState;
+    public mutations?: IMenuMutations;
 
-  private getMenuState(): IMenuState {
-    return { menu: { recipes: [] } };
-  }
-
-  private getMutations(): IMenuMutations {
-    const mutations: IMenuMutations = {
-      addRecipe(state: IMenuState, recipe: Recipe) {
-        state.menu.recipes.push(recipe);
-      }
+    public constructor() {
+        this.namespaced = true;
+        this.state = this.getMenuState();
+        this.mutations = this.getMutations();
     }
-    return mutations;
-  }
+
+    private getMenuState(): IMenuState {
+        return { menu: { recipes: [], recipeLists: [] } };
+    }
+
+    private getMutations(): IMenuMutations {
+        const mutations: IMenuMutations = {
+            addRecipe(state: IMenuState, recipe: Recipe) {
+                state.menu.recipes.push(recipe);
+            }
+        }
+        return mutations;
+    }
 }

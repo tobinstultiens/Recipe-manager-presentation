@@ -40,6 +40,7 @@ const routes = [
 		path: "/recipe/get/:recipeId",
 		name: "Recipe",
 		component: Recipe,
+		props: true,
 		meta: {
 			requiresAuth: true
 		}
@@ -48,6 +49,7 @@ const routes = [
 		path: "/recipe/update/:recipeId",
 		name: "RecipeUpdate",
 		component: RecipeUpdate,
+		props: true,
 		meta: {
 			requiresAuth: true
 		}
