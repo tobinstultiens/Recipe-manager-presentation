@@ -2,7 +2,7 @@
   <v-container fill-height fluid>
     <v-row align="center" justify="center">
       <v-col></v-col>
-      <v-col cols="3" sm="4">
+      <v-col cols="6" sm="8">
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark flat>
             <v-toolbar-title>Login form</v-toolbar-title>
@@ -24,6 +24,7 @@
                 prepend-icon="mdi-account"
                 v-model="form.email"
                 type="text"
+								required
               ></v-text-field>
 
               <v-text-field
@@ -33,6 +34,7 @@
                 prepend-icon="mdi-lock"
                 v-model="form.password"
                 type="password"
+								required
               ></v-text-field>
             </v-form>
           </v-card-text>

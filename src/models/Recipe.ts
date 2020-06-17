@@ -1,28 +1,28 @@
 export interface Ingredient {
-	id: string;
+	id?: string;
 	measurement: number;
 	measurementType: string;
 	ingredientDescription: string;
-	recipeId: string;
+	recipeId?: string;
 }
 
 export interface Direction {
-	id: string;
+	id?: string;
 	index: number;
 	description: string;
-	recipeId: string;
+	recipeId?: string;
 }
 
 export interface RecipeTime {
-	id: string;
+	id?: string;
 	prepTime: string;
 	cookTime: string;
 	totalTime: string;
-	recipeId: string;
+	recipeId?: string;
 }
 
 export interface Recipe {
-	id: string;
+	id?: string;
 	title: string;
 	description: string;
 	ingredients: Ingredient[];
@@ -30,7 +30,7 @@ export interface Recipe {
 	recipeTime?: RecipeTime;
 	imgLink?: string;
 	videoLink?: string;
-	creationDateTime: Date;
-	lastUpdatedDateTime: Date;
-	userId: string;
+	creationDateTime?: Date;
+	lastUpdatedDateTime?: Date;
+	userId?: string;
 }

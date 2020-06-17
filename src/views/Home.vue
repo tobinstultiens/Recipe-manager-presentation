@@ -1,23 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <v-btn @click="logout">Logout</v-btn>
-  </div>
+	<div class="home">
+		<RecipeHome />
+	</div>
 </template>
 
-<script>
-import firebase from "firebase";
+<script lang="ts">
+import RecipeHome from "@/components/recipe/RecipeHome.vue";
+import Vue from "vue";
 
-export default {
-  name: "Home",
-  methods: {
-    logout(){
-    firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-}, function() {
-  // An error happened.
+export default Vue.extend({
+	name: "Home",
+	components: {
+		RecipeHome
+	}
 });
-    }
-  }
-};
 </script>
