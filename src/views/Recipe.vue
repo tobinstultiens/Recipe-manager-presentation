@@ -74,7 +74,6 @@ const recipeService = new RecipeService();
   methods: {
     getRecipeInfo() {
       recipeService.get(this.$props.recipeId).then(response => {
-        console.log(response.data);
         this.$data.recipe = response.data;
       });
     }

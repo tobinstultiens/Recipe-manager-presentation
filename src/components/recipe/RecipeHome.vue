@@ -44,9 +44,6 @@ export default Vue.extend({
         .delete(id)
         .then(() => {
           this.retrieveRecipes();
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     viewRecipe(id: string) {
@@ -59,9 +56,6 @@ export default Vue.extend({
         .getAll(1, 25, token)
         .then(response => {
           this.items = response.data;
-        })
-        .catch(error => {
-          console.log(error);
         });
     }
   }
