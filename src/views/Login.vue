@@ -24,7 +24,7 @@
                 prepend-icon="mdi-account"
                 v-model="form.email"
                 type="text"
-								required
+                required
               ></v-text-field>
 
               <v-text-field
@@ -34,7 +34,7 @@
                 prepend-icon="mdi-lock"
                 v-model="form.password"
                 type="password"
-								required
+                required
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -60,6 +60,10 @@
       </v-col>
       <v-col></v-col>
     </v-row>
+    <v-snackbar :color="snackbarColor" v-model="snackbar">
+      {{ snackbarText }}
+      <v-btn text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -76,7 +80,10 @@ export default {
       },
       overlay: false,
       dialog: false,
-      dialogInfo: null
+      dialogInfo: null,
+      snackbar: false,
+      snackbarText: "",
+      snackbarColor: ""
     };
   },
   methods: {
@@ -85,10 +92,15 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
+          this.snackbarText = "Logged in";
+          this.snackbarColor = "gray";
+          this.snackbar = true;
           this.$router.replace({ name: "Home" });
         })
         .catch(err => {
-          this.error = err.message;
+          this.snackbarText = err.message;
+          this.snackbarColor = "red";
+          this.snackbar = true;
         });
     }
   }
