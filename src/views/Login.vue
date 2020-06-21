@@ -40,7 +40,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="submit">Login</v-btn>
+            <v-btn name="Login" @click="submit">Login</v-btn>
           </v-card-actions>
         </v-card>
         <v-overlay :value="overlay">
@@ -62,7 +62,7 @@
     </v-row>
     <v-snackbar :color="snackbarColor" v-model="snackbar">
       {{ snackbarText }}
-      <v-btn text @click="snackbar = false">Close</v-btn>
+      <v-btn name="Close" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
 </template>

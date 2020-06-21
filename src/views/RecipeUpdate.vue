@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RecipeUpdate />
+    <RecipeUpdate :recipeId="recipeId"/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import RecipeUpdate from "@/components/recipe/RecipeUpdate.vue";
 
 export default Vue.extend({
   props: {
-    userId: {
+    recipeId: {
       required: true
     }
   },

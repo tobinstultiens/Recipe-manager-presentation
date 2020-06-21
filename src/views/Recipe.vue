@@ -1,7 +1,8 @@
 <template>
   <div>
+    <v-btn @click="EditRecipe">Edit</v-btn>
     <v-img v-if="recipe.imgLink" :src="recipe.imgLink"></v-img>
-	<v-btn v-if="recipe.videoLink" :src="recipe.videoLink">Video</v-btn>
+    <v-btn v-if="recipe.videoLink" :src="recipe.videoLink">Video</v-btn>
     <v-text-field v-model="recipe.title" label="Title" outlined readonly></v-text-field>
     <v-text-field v-model="recipe.description" label="Description" outlined readonly></v-text-field>
     <v-row v-for="(ingredient, i) in recipe.ingredients" :key="i">
@@ -76,6 +77,9 @@ const recipeService = new RecipeService();
       recipeService.get(this.$props.recipeId).then(response => {
         this.$data.recipe = response.data;
       });
+    },
+    EditRecipe(){
+      this.$router.push({ name: "RecipeUpdate", params: { recipeId: this.$props.recipeId } });
     }
   },
   mounted() {
