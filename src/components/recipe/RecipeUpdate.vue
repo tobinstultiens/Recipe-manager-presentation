@@ -88,16 +88,22 @@ const recipeService = new RecipeService();
       alert: false,
       snackbar: false,
       snackbarText: "",
+      recipe: {} as Recipe,
       titleRules: [
         (v: string) => !!v || "Name is required",
         (v: string) =>
           (v && v.length <= 50) || "Name must be less than 10 characters"
       ]
     };
+  },
+  mounted() {
+    recipeService.get(this.$props.recipeId).then(Response => {
+      this.$data.recipe = Response.data;
+    });
   }
 })
 export default class RecipeUpdate extends Vue {
-  @Prop() private recipe!: Recipe;
+  @Prop() private recipeId!: string;
   addRecipeDirections() {
     this.$data.recipe.directions.push({
       index: this.$data.recipe.directions.length + 1,

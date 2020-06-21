@@ -27,8 +27,11 @@
       </v-col>
       <v-col></v-col>
     </v-row>
-    <v-btn @click="logout">Logout</v-btn>
-    <v-btn @click="CreateRecipe">Create Recipe</v-btn>
+    <div v-if="!$route.meta.hideNavigation">
+      <v-btn @click="logout">Logout</v-btn>
+      <v-btn @click="CreateRecipe">Create Recipe</v-btn>
+      <v-btn @click="Home">Home</v-btn>
+    </div>
   </v-app>
 </template>
 
@@ -45,9 +48,13 @@ export default Vue.extend({
         .then(() => {
           this.$router.push({ name: "Login" });
         });
+      this.$router.push({ name: "Login" });
     },
     CreateRecipe() {
       this.$router.push({ name: "RecipeAdd" });
+    },
+    Home() {
+      this.$router.push({ name: "Home" });
     }
   }
 });

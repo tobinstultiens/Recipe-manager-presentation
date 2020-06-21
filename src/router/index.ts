@@ -25,7 +25,8 @@ const routes = [
 		name: "Login",
 		component: Login,
 		meta: {
-			guest: true
+			guest: true,
+			hideNavigation: true
 		}
 	},
 	{
@@ -33,7 +34,8 @@ const routes = [
 		name: "Register",
 		component: Register,
 		meta: {
-			guest: true
+			guest: true,
+			hideNavigation: true 
 		}
 	},
 	{
